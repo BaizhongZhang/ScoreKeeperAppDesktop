@@ -27,7 +27,7 @@
         </properties>
         <border type="none" title="" title-position="2"/>
         <children>
-          <component id="6dec2" class="javax.swing.JComboBox" binding="comboBox1" default-binding="true">
+          <component id="6dec2" class="javax.swing.JComboBox" binding="TeamList">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -63,7 +63,7 @@
               <font size="24"/>
             </properties>
           </component>
-          <component id="f6559" class="javax.swing.JComboBox" default-binding="true">
+          <component id="f6559" class="javax.swing.JComboBox" binding="InformationType">
             <constraints>
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -105,7 +105,7 @@
         </constraints>
         <properties>
           <font name="Calibri" size="22" style="1"/>
-          <text value="Team"/>
+          <text value="Team/Player"/>
           <verticalAlignment value="1"/>
           <verticalTextPosition value="1"/>
         </properties>

@@ -15,7 +15,7 @@ public class Login extends JFrame implements ActionListener
     Login()
     {
         setTitle("Scorekeeper View.Login in window");
-        setVisible(true);
+
         setSize(600, 300);
         setLayout(null);
         //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -51,6 +51,7 @@ public class Login extends JFrame implements ActionListener
         add(p1);
         add(btn1);
         btn1.addActionListener(this);
+        setVisible(true);
     }
 
     public void actionPerformed(ActionEvent e)

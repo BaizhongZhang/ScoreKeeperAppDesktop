@@ -1,9 +1,12 @@
 package View;
 
+import Model.LiveMatchManager;
+import Model.Team;
 import WebService.TaskListener;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Created by Baizhong Zhang on 2015/11/23.
@@ -20,6 +23,8 @@ public class LiveModeView extends JPanel {
     JPanel bottom = new JPanel();
     JPanel buttonPanel = new JPanel();
     JFormattedTextField txt = new JFormattedTextField("Number only!");
+    LiveMatchManager lmm;
+    private GameCalendarFilter gf;
 
     public void getLiveModeView(){
         backgroundPanel.setLayout(new BoxLayout(backgroundPanel, BoxLayout.PAGE_AXIS));
@@ -50,8 +55,8 @@ public class LiveModeView extends JPanel {
         teamLabel.setFont(new Font("Serif", Font.BOLD, 25));
         teamLabel.setHorizontalAlignment(JLabel.LEFT);
 
-        String[] soccerTeam = new String[]{"Houston", "Los Angeles"};//2
-        JComboBox<String> teamList = new JComboBox<>(soccerTeam) ;
+        gf = new GameCalendarFilter();
+
 
         info = new JLabel("Information Type");//3
         info.setFont(new Font("Serif", Font.BOLD, 25));
@@ -67,7 +72,7 @@ public class LiveModeView extends JPanel {
         txt.setFont(new Font("Serif", Font.BOLD, 25));//6
 
         bottom.add(teamLabel,0);
-        bottom.add(teamList, 1);
+        //bottom.add(teamList, 1);
         bottom.add(info,2);
         bottom.add(inputType,3);
         bottom.add(value,4);

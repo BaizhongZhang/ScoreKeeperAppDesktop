@@ -38,7 +38,6 @@ public class GameCalendarFilter extends JPanel implements TaskListener{
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     String selectedDate;
     ArrayList<LiveMatchManager> lmmAryLst = new ArrayList<>();
-    LiveMatchManager lmm;
     JFrame timeSelectFrame = new JFrame("Date Selector");
     JPanel timeSelectPanel = new JPanel();
     JPanel matchPanel = new JPanel();
@@ -60,27 +59,48 @@ public class GameCalendarFilter extends JPanel implements TaskListener{
                 //testing
                 selectedDate = sdf.format(model.getValue());
                 jsonScheduleParsing(Constants.RESULT_SCHEDULE);
-                ArrayList<Team> teamNames = lmm.getParticipateTeams();// has the team name
+               // ArrayList<Team> teamNames = lmm.getParticipateTeams();// has the team name
                 JLabel dateScheduleTitle = new JLabel(selectedDate + " Schedule");
+
                 dateScheduleTitle.setAlignmentX(20f);
                 dateScheduleTitle.setFont(new Font("Serif", Font.BOLD, 20));
                 mainLayout.add(dateScheduleTitle);
-                String team1 = teamNames.get(0).getTeamName();
-                String team2 = teamNames.get(1).getTeamName();
 
-                JLabel match = new JLabel(team1 + " VS " +team2+ "  ");
-                match.setBackground(Color.blue);
-                match.setFont(new Font("Serif", Font.BOLD, 30));
-                JButton viewMatch = new JButton("View");
-                viewMatch.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
+
+                for(int i=0; i<lmmAryLst.size();i++){
+                    ArrayList<Team> teamNames = lmmAryLst.get(i).getParticipateTeams();
+                    final LiveMatchManager lmm = lmmAryLst.get(i);
+                    final String team1 = teamNames.get(0).getTeamName();
+                    final String team2 = teamNames.get(1).getTeamName();
+                    JPanel matchPanel = new JPanel();
+                    JLabel match = new JLabel(team1 + " VS " +team2+ "  ");
+                    match.setBackground(Color.blue);
+                    match.setFont(new Font("Serif", Font.BOLD, 30));
+                    matchPanel.add(match);
+                    JButton viewMatch = new JButton("View");
+                    JButton updateMatch = new JButton("Update");
+
+                    viewMatch.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent e) {
+                            GameView gameView = new GameView(lmm);
+                            gameView.getPageView();
+                        }
+                    });
+
+                    updateMatch.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent e) {
+                        /*
                         LiveModeView view = new LiveModeView();
                         view.getLiveModeView();
-                    };
-                });
-                matchPanel.add(match);
-                matchPanel.add(viewMatch);
-                mainLayout.add(matchPanel);
+                        */
+                            LiveMode mv = new LiveMode(lmm);
+                            mv.getView();
+                        }
+                    });
+                    matchPanel.add(viewMatch);
+                    matchPanel.add(updateMatch);
+                    mainLayout.add(matchPanel);
+                }
             }
 
         });
@@ -90,7 +110,7 @@ public class GameCalendarFilter extends JPanel implements TaskListener{
         timeSelectPanel.add(userIndicator);
         //timeSelectFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         timeSelectFrame.setSize(800, 600);
-        timeSelectFrame.setVisible(true);
+
         //timeSelectFrame.setLocationRelativeTo(null);
         dateFormat.put("text.today", "Today");
         dateFormat.put("text.month", "Month");
@@ -100,6 +120,7 @@ public class GameCalendarFilter extends JPanel implements TaskListener{
         timeSelectPanel.add(datePicker);
         timeSelectPanel.add(b1);
         mainLayout.add(timeSelectPanel);
+        timeSelectFrame.setVisible(true);
     }
 
     @Override
@@ -108,7 +129,7 @@ public class GameCalendarFilter extends JPanel implements TaskListener{
         jsonScheduleParsing(result);
     }
 
-    private void jsonScheduleParsing(String httpResult) {
+    public void jsonScheduleParsing(String httpResult) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
         try {
@@ -133,12 +154,6 @@ public class GameCalendarFilter extends JPanel implements TaskListener{
 
         } catch (Exception e) {
             lmmAryLst.clear();
-        }
-
-        if (lmmAryLst.size() != 0) {
-            for(int i = 0; i< lmmAryLst.size(); i++){
-                lmm = lmmAryLst.get(i);
-            }
         }
     }
 }
